@@ -76,7 +76,7 @@ const checkNums = num => {
 
   if (str[0] === '0') return 'Сегодня никто с тобой не тусует'
   if (str[0] === '1' && str.length === 1) return `Сегодня с тобой тусует 1 человек`
-  if (str[0] === '1' && str.length === 2) return `Сегодня с тобой тусуют ${num} человек`
+  if (str[str.length - 2] === '1' && str.length > 1) return `Сегодня с тобой тусуют ${num} человек`
   if (['2', '3', '4'].includes(str[str.length - 1])) return `Сегодня с тобой тусуют ${num} человека`
   return `Сегодня с тобой тусуют ${num} человек`
 
