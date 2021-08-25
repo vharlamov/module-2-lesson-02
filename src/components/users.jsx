@@ -91,7 +91,11 @@ const Users = () => {
   
   return (
     <>
-      <button type="button" className="btn btn-primary">
+      <button type="button" className={
+        `btn btn-${String(users.length)[0] === '0' 
+          ? 'danger' 
+          : 'primary'}`
+      }>
         {checkNums(users.length)}
       </button>
       <table className='table'>
