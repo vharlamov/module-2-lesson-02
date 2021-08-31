@@ -26,7 +26,8 @@ const User = props => {
   const {
     selectClick, 
     selected,
-    onDelete
+    onDelete,
+    items
   } = props
 
   const isMarked = selected[_id]
@@ -46,7 +47,7 @@ const User = props => {
       <td>
         <Button 
           id={_id} 
-          onDelete={onDelete}
+          onDelete={() => onDelete(_id, items - 1)}
         />
       </td>
     </tr>)}
