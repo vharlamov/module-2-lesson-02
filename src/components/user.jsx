@@ -2,12 +2,12 @@ import React from 'react';
 import Qualities from './qualities'
 import Bookmark from './bookmark';
 
-const Button = ({id, onDelete}) => {
+const Button = ({id, onclick}) => {
   return (
     <button 
       className='btn btn-danger' 
       id={id}
-      onClick={() => onDelete(id)}
+      onClick={onclick}
         >Delete
     </button>
   )
@@ -47,7 +47,7 @@ const User = props => {
       <td>
         <Button 
           id={_id} 
-          onDelete={() => onDelete(_id, items - 1)}
+          onclick={() => onDelete(_id, items - 1)}
         />
       </td>
     </tr>)}

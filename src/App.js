@@ -25,6 +25,13 @@ const App = () => {
     if (!pageItems) setCurrentPage(currentPage - 1)
   }
 
+  const createPage = () => {
+    const start = pageSize * (currentPage - 1)
+    const pageUsers = users.slice(start, start + pageSize)
+  
+    return pageUsers
+  }
+
   const toggleMark = id => {
     const newSelected = {...selected}
     newSelected[id] = !newSelected[id]
@@ -36,12 +43,10 @@ const App = () => {
     <>
       <StatusBar users={users} />
       <Users 
-        users={users}
+        users={createPage()}
         onDelete={handleDelete}
         selected={selected}
         selectClick={toggleMark}
-        pageSize = {pageSize}
-        pageNum = {currentPage}
       />
       {pagesQuantity > 1 
         ? <PageButtons 
