@@ -1,13 +1,11 @@
-const Qualities = props => {
+const Qualities = (props) => {
   const arr = props.arr
-  const qlts = arr.map(q => (
-    <span 
-      key={q._id} 
-      className={`badge bg-${q.color} me-2`}
-    >
+  const qlts = arr.map((q) => (
+    <span key={q._id} className={`badge bg-${q.color} me-2`}>
       {q.name}
-    </span>))
+    </span>
+  ))
   return qlts
 }
- 
-export default Qualities;
+
+export default Qualities

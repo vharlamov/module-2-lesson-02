@@ -1,9 +1,12 @@
-const Bookmark = props => {
-  const {marked} = props
-  //console.log(selected, id);
-  return ( 
-    <i className={`bi bi-bookmark${marked ? '-fill' : ''}`}></i>
-   )
+import PropTypes from "prop-types"
+
+const Bookmark = (props) => {
+  const { marked } = props
+  return <i className={`bi bi-bookmark${marked ? "-fill" : ""}`}></i>
 }
- 
-export default Bookmark;
+
+Bookmark.propTypes = {
+  marked: PropTypes.bool.isRequired
+}
+
+export default Bookmark
