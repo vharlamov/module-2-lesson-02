@@ -11,10 +11,9 @@ const Button = ({ id, onclick }) => {
 }
 
 const User = (props) => {
-  const { _id, name, qualities, profession, completedMeetings, rate } =
-    props.user
+  const { selectClick, selected, onDelete, items, user } = props
 
-  const { selectClick, selected, onDelete, items } = props
+  const { _id, name, qualities, profession, completedMeetings, rate } = user
 
   const isMarked = selected[_id]
 
@@ -37,11 +36,11 @@ const User = (props) => {
 
 User.propTypes = {
   selectClick: PropTypes.func.isRequired,
-  selected: PropTypes.array.isRequired,
+  selected: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
-  items: PropTypes.num,
+  items: PropTypes.number,
   user: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired
+  _id: PropTypes.string
 }
 
 Button.propTypes = {
