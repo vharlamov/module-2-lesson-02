@@ -6,7 +6,7 @@ const Bookmark = (props) => {
 }
 
 Bookmark.propTypes = {
-  marked: PropTypes.bool.isRequired
+  marked: PropTypes.bool
 }
 
 export default Bookmark

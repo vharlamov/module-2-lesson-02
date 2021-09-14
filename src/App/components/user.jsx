@@ -36,7 +36,7 @@ const User = (props) => {
 
 User.propTypes = {
   selectClick: PropTypes.func.isRequired,
-  selected: PropTypes.object.isRequired,
+  selected: PropTypes.object,
   onDelete: PropTypes.func.isRequired,
   items: PropTypes.number,
   user: PropTypes.object.isRequired,

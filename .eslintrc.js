@@ -14,10 +14,15 @@ module.exports = {
   plugins: ["react"],
   rules: {
     quotes: "off",
-    indent: ["error", 2],
+    indent: [0, 2],
     "object-curly-spacing": "off",
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": [
+      "error",
+      { anonymous: "always", named: "never" }
+    ],
     "no-trailing-spaces": "off",
-    "multiline-ternary": "off"
+    "multiline-ternary": "off",
+    "prefer-const": "off",
+    "no-unused-vars": "off"
   }
 }
