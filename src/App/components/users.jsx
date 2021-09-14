@@ -26,7 +26,7 @@ const Head = () => {
 }
 
 const Users = (props) => {
-  const { users, ...rest } = props
+  const { users, onDelete, ...rest } = props
   const pageSize = 5
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
@@ -64,6 +64,11 @@ const Users = (props) => {
     setCurrentPage(1)
   }
 
+  const handleEmptyPage = (id) => {
+    if (!(userCrop.length - 1)) setCurrentPage(currentPage - 1)
+    onDelete(id)
+  }
+
   const clearFilter = () => {
     setSelectedProf()
   }
@@ -98,6 +103,7 @@ const Users = (props) => {
                   items={arr.length}
                   selected={selected}
                   selectClick={toggleMark}
+                  onDelete={handleEmptyPage}
                   {...rest}
                 />
               ))}
@@ -118,7 +124,8 @@ const Users = (props) => {
 }
 
 Users.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired
 }
 
 export default Users
