@@ -1,41 +1,28 @@
 import { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import "bootstrap/dist/css/bootstrap.css"
-import User from "./user"
+import UsersTable from "./usersTable"
 import Pagination from "./pagination"
 import { paginate } from "../utils/paginate"
 import GroupList from "./groupList"
 import api from "../api/index"
 import StatusBar from "./statusbar"
 import isEqual from "../utils/isEqual"
-
-const Head = () => {
-  return (
-    <thead>
-      <tr>
-        <th>Имя</th>
-        <th>Качества</th>
-        <th>Профессия</th>
-        <th>Встречался, раз</th>
-        <th>Оценка</th>
-        <th>Избранное</th>
-        <th></th>
-      </tr>
-    </thead>
-  )
-}
+import _ from "lodash"
 
 const Users = (props) => {
-  const { users, onDelete, ...rest } = props
-  const pageSize = 5
+  const { users, onDelete } = props
+  const pageSize = 12
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
+  const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
   const filteredUsers = selectedProf
     ? users.filter((i) => isEqual(i.profession, selectedProf))
     : users
   const count = filteredUsers.length
-  const userCrop = paginate(filteredUsers, currentPage, pageSize)
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
+  const userCrop = paginate(sortedUsers, currentPage, pageSize)
   const [selected, setSelected] = useState({})
 
   const toggleMark = (id) => {
@@ -69,6 +56,10 @@ const Users = (props) => {
     onDelete(id)
   }
 
+  const handleSort = (data) => {
+    setSortBy(data)
+  }
+
   const clearFilter = () => {
     setSelectedProf()
   }
@@ -93,22 +84,14 @@ const Users = (props) => {
       {count > 0 ? (
         <div className="d-flex flex-column">
           <StatusBar users={filteredUsers} />
-          <table className="table">
-            <Head />
-            <tbody>
-              {userCrop.map((user, i, arr) => (
-                <User
-                  user={user}
-                  key={user._id}
-                  items={arr.length}
-                  selected={selected}
-                  selectClick={toggleMark}
-                  onDelete={handleEmptyPage}
-                  {...rest}
-                />
-              ))}
-            </tbody>
-          </table>
+          <UsersTable
+            users={userCrop}
+            selected={selected}
+            selectClick={toggleMark}
+            onDelete={handleEmptyPage}
+            onSort={handleSort}
+            currentSort={sortBy}
+          />
           <nav aria-label="Page navigation example">
             <Pagination
               itemsCount={count}
@@ -125,7 +108,8 @@ const Users = (props) => {
 
 Users.propTypes = {
   users: PropTypes.array.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  onSort: PropTypes.func.isRequired
 }
 
 export default Users
