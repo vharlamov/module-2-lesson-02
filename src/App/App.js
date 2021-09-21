@@ -14,7 +14,23 @@ const App = () => {
     setUsers(users.filter((u) => u._id !== id))
   }
 
-  return <Users users={users || []} onDelete={handleDelete} />
+  const toggleMark = (id) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === id) {
+          return { ...user, bookmark: !user.bookmark }
+        }
+        return user
+      })
+    )
+  }
+  return (
+    <Users
+      users={users || []}
+      selectClick={toggleMark}
+      onDelete={handleDelete}
+    />
+  )
 }
 
 export default App
