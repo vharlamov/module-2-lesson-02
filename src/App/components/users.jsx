@@ -25,7 +25,6 @@ const Users = (props) => {
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
   const [selected, setSelected] = useState({})
-  // console.log("users in users", selectedProf)
 
   useEffect(() => {
     setSelected(users.reduce((a, u) => ({ ...a, [u._id]: u.bookmark }), {}))
