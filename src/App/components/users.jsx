@@ -11,39 +11,37 @@ import isEqual from "../utils/isEqual"
 import _ from "lodash"
 
 const Users = (props) => {
-  const { users, onDelete } = props
-  const pageSize = 12
+  const { users, onDelete, selectClick } = props
+  const pageSize = 5
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
+  const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
   const filteredUsers = selectedProf
-    ? users.filter((i) => isEqual(i.profession, selectedProf))
+    ? users.filter((user) => isEqual(user.profession, selectedProf))
     : users
+
   const count = filteredUsers.length
-  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
   const [selected, setSelected] = useState({})
-
-  const toggleMark = (id) => {
-    const newSelected = { ...selected }
-    newSelected[id] = !newSelected[id]
-
-    setSelected(newSelected)
-  }
+  // console.log("users in users", selectedProf)
 
   useEffect(() => {
-    setSelected(users.reduce((a, u) => ({ ...a, [u._id]: false }), {}))
+    setSelected(users.reduce((a, u) => ({ ...a, [u._id]: u.bookmark }), {}))
   }, [])
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data))
   }, [])
 
-  useEffect(() => {}, [selectedProf])
-
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex)
+  }
+
+  const handleMark = (id) => {
+    setSelected({ ...selected, [id]: !selected.id })
+    selectClick(id)
   }
 
   const handleProfSelect = (item) => {
@@ -87,7 +85,7 @@ const Users = (props) => {
           <UsersTable
             users={userCrop}
             selected={selected}
-            selectClick={toggleMark}
+            selectClick={handleMark}
             onDelete={handleEmptyPage}
             onSort={handleSort}
             currentSort={sortBy}
@@ -109,7 +107,7 @@ const Users = (props) => {
 Users.propTypes = {
   users: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onSort: PropTypes.func.isRequired
+  selectClick: PropTypes.func.isRequired
 }
 
 export default Users

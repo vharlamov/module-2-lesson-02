@@ -13,12 +13,18 @@ const TableHeader = ({ onSort, currentSort, columns }) => {
     }
   }
 
+  const makeArrow = (order, path) => {
+    if (!path || currentSort.path !== path) return
+    const dir = order === "asc" ? "down" : "up"
+    return <i className={`bi bi-caret-${dir}-fill ms-2`}></i>
+  }
+
   return (
     <thead>
       <tr>
         {Object.keys(columns).map((column) => (
           <th
-            key={column}
+            key={column.path}
             onClick={() =>
               columns[column].path ? handleSort(columns[column].path) : null
             }
@@ -26,6 +32,7 @@ const TableHeader = ({ onSort, currentSort, columns }) => {
             scope="col"
           >
             {columns[column].name}
+            {makeArrow(currentSort.order, columns[column].path)}
           </th>
         ))}
       </tr>

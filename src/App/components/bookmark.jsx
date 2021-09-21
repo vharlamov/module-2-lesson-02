@@ -1,8 +1,11 @@
 import PropTypes from "prop-types"
 
-const Bookmark = (props) => {
-  const { marked } = props
-  return <i className={`bi bi-bookmark${marked ? "-fill" : ""}`}></i>
+const Bookmark = ({ marked, ...rest }) => {
+  return (
+    <button {...rest}>
+      <i className={`bi bi-bookmark${marked ? "-fill" : ""}`}></i>
+    </button>
+  )
 }
 
 Bookmark.propTypes = {
