@@ -14,7 +14,7 @@ const TableHeader = ({ onSort, currentSort, columns }) => {
   }
 
   const makeArrow = (order, path) => {
-    if (!path || currentSort.path !== path) return
+    if (currentSort.path !== path) return
     const dir = order === "asc" ? "down" : "up"
     return <i className={`bi bi-caret-${dir}-fill ms-2`}></i>
   }
