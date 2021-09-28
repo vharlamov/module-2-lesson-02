@@ -1,11 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
-import TableHeader from "./tableHeader"
-import TableBody from "./tableBody"
+// import TableHeader from "./tableHeader"
+// import TableBody from "./tableBody"
 import Bookmark from "./bookmark"
 import Qualities from "./qualities"
+import Table from "./table"
 
-const UsersTable = ({ users, selectClick, onDelete, ...rest }) => {
+const UsersTable = ({
+  users,
+  selectClick,
+  onDelete,
+  onSort,
+  onSelect,
+  currentSort
+}) => {
   const columns = {
     name: { path: "name", name: "Имя" },
     qualities: {
@@ -37,11 +45,22 @@ const UsersTable = ({ users, selectClick, onDelete, ...rest }) => {
       )
     }
   }
+
   return (
-    <table className="table">
-      <TableHeader columns={columns} {...rest} />
-      <TableBody {...{ columns, data: users }} />
-    </table>
+    <Table
+      {...{ columns, onSort, data: users, onSelect: onSelect, currentSort }}
+    >
+      {/*       <table className="table">
+        <TableHeader
+          columns={columns}
+          onSort={onSort}
+          onSelect={onSelect}
+          currentSort={currentSort}
+        />
+        <TableBody {...{ columns, data: users }} />
+      </table>
+ */}
+    </Table>
   )
 }
 
@@ -50,7 +69,8 @@ UsersTable.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   currentSort: PropTypes.object.isRequired,
-  selectClick: PropTypes.func.isRequired
+  selectClick: PropTypes.func.isRequired,
+  onSelect: PropTypes.func
 }
 
 export default UsersTable

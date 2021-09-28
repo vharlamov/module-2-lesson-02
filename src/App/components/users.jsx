@@ -10,20 +10,18 @@ import StatusBar from "./statusbar"
 import isEqual from "../utils/isEqual"
 import _ from "lodash"
 
-const Users = (props) => {
-  const { users, onDelete, selectClick } = props
+const Users = () => {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    api.users.fetchAll().then((data) => setUsers(data))
+  }, [])
+
   const pageSize = 5
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
-  const filteredUsers = selectedProf
-    ? users.filter((user) => isEqual(user.profession, selectedProf))
-    : users
-
-  const count = filteredUsers.length
-  const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
-  const userCrop = paginate(sortedUsers, currentPage, pageSize)
   const [selected, setSelected] = useState({})
 
   useEffect(() => {
@@ -34,23 +32,25 @@ const Users = (props) => {
     api.professions.fetchAll().then((data) => setProfession(data))
   }, [])
 
-  const handlePageChange = (pageIndex) => {
-    setCurrentPage(pageIndex)
+  const toggleMark = (id) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === id) {
+          return { ...user, bookmark: !user.bookmark }
+        }
+        return user
+      })
+    )
+    setSelected({ ...selected, [id]: !selected.id })
   }
 
-  const handleMark = (id) => {
-    setSelected({ ...selected, [id]: !selected.id })
-    selectClick(id)
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex)
   }
 
   const handleProfSelect = (item) => {
     setSelectedProf(item)
     setCurrentPage(1)
-  }
-
-  const handleEmptyPage = (id) => {
-    if (!(userCrop.length - 1)) setCurrentPage(currentPage - 1)
-    onDelete(id)
   }
 
   const handleSort = (data) => {
@@ -61,52 +61,62 @@ const Users = (props) => {
     setSelectedProf()
   }
 
-  return (
-    <div className="d-flex">
-      {professions && (
-        <div className="d-flex flex-column flex-shrink-0 p-3">
-          <GroupList
-            selectedItem={selectedProf}
-            items={professions}
-            onSelect={handleProfSelect}
-            value="_id"
-            content="name"
-          />
-          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-            Очистить
-          </button>
-        </div>
-      )}
+  if (users) {
+    const filteredUsers = selectedProf
+      ? users.filter((user) => isEqual(user.profession, selectedProf))
+      : users
 
-      {count > 0 ? (
-        <div className="d-flex flex-column">
-          <StatusBar users={filteredUsers} />
-          <UsersTable
-            users={userCrop}
-            selected={selected}
-            selectClick={handleMark}
-            onDelete={handleEmptyPage}
-            onSort={handleSort}
-            currentSort={sortBy}
-          />
-          <nav aria-label="Page navigation example">
-            <Pagination
-              itemsCount={count}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
+    const count = filteredUsers.length
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
+    const userCrop = paginate(sortedUsers, currentPage, pageSize)
+
+    const handleDelete = (id) => {
+      if (!(userCrop.length - 1)) setCurrentPage(currentPage - 1)
+      setUsers(users.filter((u) => u._id !== id))
+    }
+
+    return (
+      <div className="d-flex">
+        {professions && (
+          <div className="d-flex flex-column flex-shrink-0 p-3">
+            <GroupList
+              selectedItem={selectedProf}
+              items={professions}
+              onSelect={handleProfSelect}
+              value="_id"
+              content="name"
             />
-          </nav>
-        </div>
-      ) : null}
-    </div>
-  )
-}
+            <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+              Очистить
+            </button>
+          </div>
+        )}
 
-Users.propTypes = {
-  users: PropTypes.array.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  selectClick: PropTypes.func.isRequired
+        {count > 0 ? (
+          <div className="d-flex flex-column">
+            <StatusBar users={filteredUsers} />
+            <UsersTable
+              users={userCrop}
+              selected={selected}
+              selectClick={toggleMark}
+              onDelete={handleDelete}
+              onSort={handleSort}
+              currentSort={sortBy}
+            />
+            <nav aria-label="Page navigation example">
+              <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </nav>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+  return "loading..."
 }
 
 export default Users
