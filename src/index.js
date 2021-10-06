@@ -5,10 +5,13 @@ import App from "./App/App"
 import reportWebVitals from "./reportWebVitals"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap/dist/css/bootstrap.css"
+import { BrowserRouter } from "react-router-dom"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 )

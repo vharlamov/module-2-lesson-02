@@ -1,21 +1,27 @@
 import React from "react"
 import PropTypes from "prop-types"
-// import TableHeader from "./tableHeader"
-// import TableBody from "./tableBody"
 import Bookmark from "./bookmark"
 import Qualities from "./qualities"
 import Table from "./table"
+import { Link } from "react-router-dom"
 
 const UsersTable = ({
   users,
   selectClick,
+  selected,
   onDelete,
   onSort,
   onSelect,
   currentSort
 }) => {
   const columns = {
-    name: { path: "name", name: "Имя" },
+    name: {
+      path: "name",
+      name: "Имя",
+      component: (user) => {
+        return <Link to={`users/${user._id}`}>{user.name}</Link>
+      }
+    },
     qualities: {
       name: "Качества",
       component: (user) => <Qualities qualities={user.qualities} />
@@ -48,19 +54,15 @@ const UsersTable = ({
 
   return (
     <Table
-      {...{ columns, onSort, data: users, onSelect: onSelect, currentSort }}
-    >
-      {/*       <table className="table">
-        <TableHeader
-          columns={columns}
-          onSort={onSort}
-          onSelect={onSelect}
-          currentSort={currentSort}
-        />
-        <TableBody {...{ columns, data: users }} />
-      </table>
- */}
-    </Table>
+      {...{
+        columns,
+        selected,
+        onSort,
+        data: users,
+        onSelect: onSelect,
+        currentSort
+      }}
+    ></Table>
   )
 }
 
@@ -70,7 +72,8 @@ UsersTable.propTypes = {
   onSort: PropTypes.func.isRequired,
   currentSort: PropTypes.object.isRequired,
   selectClick: PropTypes.func.isRequired,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  selected: PropTypes.object.isRequired
 }
 
 export default UsersTable

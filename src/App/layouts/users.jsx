@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import "bootstrap/dist/css/bootstrap.css"
-import UsersTable from "./usersTable"
-import Pagination from "./pagination"
 import { paginate } from "../utils/paginate"
-import GroupList from "./groupList"
 import api from "../api/index"
-import StatusBar from "./statusbar"
 import isEqual from "../utils/isEqual"
 import _ from "lodash"
+import { Route, useParams } from "react-router"
+import UsersPage from "../components/usersPage"
+import UserCard from "../components/userCard"
 
 const Users = () => {
   const [users, setUsers] = useState([])
+  const userId = useParams().userId
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data))
@@ -61,7 +61,7 @@ const Users = () => {
     setSelectedProf()
   }
 
-  if (users) {
+  if (users.length) {
     const filteredUsers = selectedProf
       ? users.filter((user) => isEqual(user.profession, selectedProf))
       : users
@@ -76,47 +76,36 @@ const Users = () => {
     }
 
     return (
-      <div className="d-flex">
-        {professions && (
-          <div className="d-flex flex-column flex-shrink-0 p-3">
-            <GroupList
-              selectedItem={selectedProf}
-              items={professions}
-              onSelect={handleProfSelect}
-              value="_id"
-              content="name"
-            />
-            <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-              Очистить
-            </button>
-          </div>
+      <>
+        {userId ? (
+          <UserCard users={users} id={userId} />
+        ) : (
+          <UsersPage
+            selectedProf={selectedProf}
+            professions={professions}
+            currentPage={currentPage}
+            filteredUsers={filteredUsers}
+            users={userCrop}
+            selected={selected}
+            sortBy={sortBy}
+            count={count}
+            pageSize={pageSize}
+            selectClick={toggleMark}
+            onDelete={handleDelete}
+            onSort={handleSort}
+            onSelect={handleProfSelect}
+            clearFilter={clearFilter}
+            onPageChange={handlePageChange}
+          />
         )}
-
-        {count > 0 ? (
-          <div className="d-flex flex-column">
-            <StatusBar users={filteredUsers} />
-            <UsersTable
-              users={userCrop}
-              selected={selected}
-              selectClick={toggleMark}
-              onDelete={handleDelete}
-              onSort={handleSort}
-              currentSort={sortBy}
-            />
-            <nav aria-label="Page navigation example">
-              <Pagination
-                itemsCount={count}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
-            </nav>
-          </div>
-        ) : null}
-      </div>
+      </>
     )
   }
-  return "loading..."
+  return null
+}
+
+Users.propsType = {
+  data: PropTypes.array
 }
 
 export default Users
