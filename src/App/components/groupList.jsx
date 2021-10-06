@@ -3,24 +3,22 @@ import PropTypes from "prop-types"
 import isEqual from "../utils/isEqual"
 
 const GroupList = ({ items, value, content, onSelect, selectedItem }) => {
-  const itemsArr = Object.getPrototypeOf(items).map
-    ? items
-    : Object.values(items)
+  const itemsArr = Array.isArray(items) ? items : Object.values(items)
 
   return (
     <ul className="list-group">
-      {itemsArr.map((i) => (
+      {itemsArr.map((item) => (
         <li
           className={
             "list-group-item" +
-            (selectedItem && isEqual(i, selectedItem) ? " active" : "")
+            (selectedItem && isEqual(item, selectedItem) ? " active" : "")
           }
-          id={i[value]}
-          key={i[value]}
-          onClick={() => onSelect(i)}
+          id={item[value]}
+          key={item[value]}
+          onClick={() => onSelect(item)}
           role="button"
         >
-          {i[content]}
+          {item[content]}
         </li>
       ))}
     </ul>
