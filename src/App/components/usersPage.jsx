@@ -47,6 +47,10 @@ const UsersPage = (props) => {
       {count > 0 ? (
         <div className="d-flex flex-column">
           <StatusBar users={filteredUsers} />
+          <div className="input-group">
+            <input type="text" placeholder="Search" className="form-control" />
+            <button className="btn btn-secondary-outline">Искать</button>
+          </div>
           <UsersTable
             users={users}
             selected={selected}

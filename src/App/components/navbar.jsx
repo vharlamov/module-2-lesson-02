@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <ul className="nav">
       <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/">
+        <Link className="text-white nav-link active" aria-current="page" to="/">
           Main
         </Link>
       </li>
@@ -20,18 +20,6 @@ const NavBar = () => {
         </Link>
       </li>
     </ul>
-    /*     <ul>
-      <li>
-        <Link to="/">Main page</Link>
-      </li>
-      <li>
-        <Link to="/">Main page</Link>
-      </li>
-      <li>
-        <Link to="/users">Users</Link>
-      </li>
-    </ul>
- */
   )
 }
 

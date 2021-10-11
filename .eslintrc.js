@@ -23,6 +23,8 @@ module.exports = {
     "no-trailing-spaces": "off",
     "multiline-ternary": "off",
     "prefer-const": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-useless-return": "off",
+    "no-useless-escape": "off"
   }
 }
