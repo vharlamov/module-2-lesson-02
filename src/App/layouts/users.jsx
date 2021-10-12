@@ -23,6 +23,7 @@ const Users = () => {
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
   const [selected, setSelected] = useState({})
+  const [searchData, setSearchData] = useState("")
 
   useEffect(() => {
     setSelected(users.reduce((a, u) => ({ ...a, [u._id]: u.bookmark }), {}))
@@ -44,6 +45,15 @@ const Users = () => {
     setSelected({ ...selected, [id]: !selected.id })
   }
 
+  const handleUserSearch = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    console.log("value", value)
+
+    setSelectedProf()
+    setSearchData(value)
+  }
+
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex)
   }
@@ -51,6 +61,7 @@ const Users = () => {
   const handleProfSelect = (item) => {
     setSelectedProf(item)
     setCurrentPage(1)
+    setSearchData("")
   }
 
   const handleSort = (data) => {
@@ -62,8 +73,14 @@ const Users = () => {
   }
 
   if (users.length) {
+    const foundUser = users.filter(
+      (user) => searchData && user.name.includes(searchData)
+    )
+
     const filteredUsers = selectedProf
       ? users.filter((user) => isEqual(user.profession, selectedProf))
+      : searchData
+      ? foundUser
       : users
 
     const count = filteredUsers.length
@@ -96,6 +113,7 @@ const Users = () => {
             onSelect={handleProfSelect}
             clearFilter={clearFilter}
             onPageChange={handlePageChange}
+            onSearch={handleUserSearch}
           />
         )}
       </>
