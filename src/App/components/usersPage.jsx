@@ -5,6 +5,7 @@ import Pagination from "../components/pagination"
 import StatusBar from "../components/statusbar"
 import GroupList from "../components/groupList"
 import { useParams } from "react-router"
+import Search from "./search"
 
 const UsersPage = (props) => {
   const {
@@ -22,7 +23,8 @@ const UsersPage = (props) => {
     onSort,
     onSelect,
     clearFilter,
-    onPageChange
+    onPageChange,
+    onSearch
   } = props
 
   const { userId } = useParams()
@@ -44,31 +46,26 @@ const UsersPage = (props) => {
         </div>
       )}
 
-      {count > 0 ? (
-        <div className="d-flex flex-column">
-          <StatusBar users={filteredUsers} />
-          <div className="input-group">
-            <input type="text" placeholder="Search" className="form-control" />
-            <button className="btn btn-secondary-outline">Искать</button>
-          </div>
-          <UsersTable
-            users={users}
-            selected={selected}
-            selectClick={selectClick}
-            onDelete={onDelete}
-            onSort={onSort}
-            currentSort={sortBy}
+      <div className="d-flex flex-column">
+        <StatusBar users={filteredUsers} />
+        <Search onSearch={onSearch} />
+        <UsersTable
+          users={users}
+          selected={selected}
+          selectClick={selectClick}
+          onDelete={onDelete}
+          onSort={onSort}
+          currentSort={sortBy}
+        />
+        <nav aria-label="Page navigation example">
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
           />
-          <nav aria-label="Page navigation example">
-            <Pagination
-              itemsCount={count}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-            />
-          </nav>
-        </div>
-      ) : null}
+        </nav>
+      </div>
     </div>
   )
 }
@@ -88,7 +85,8 @@ UsersPage.propTypes = {
   onSort: PropTypes.func,
   onSelect: PropTypes.func,
   clearFilter: PropTypes.func,
-  onPageChange: PropTypes.func
+  onPageChange: PropTypes.func,
+  onSearch: PropTypes.func
 }
 
 export default UsersPage
