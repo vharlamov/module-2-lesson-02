@@ -48,7 +48,6 @@ const Users = () => {
   const handleUserSearch = (e) => {
     e.preventDefault()
     const value = e.target.value
-    console.log("value", value)
 
     setSelectedProf()
     setSearchData(value)
