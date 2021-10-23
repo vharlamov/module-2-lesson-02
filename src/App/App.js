@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css"
-import NavBar from "./components/navbar"
+import NavBar from "./components/ui/navbar"
 import Users from "./layouts/users"
 import { Route, Switch } from "react-router"
 import Login from "./layouts/login"
@@ -10,8 +10,8 @@ const App = () => {
     <>
       <NavBar />
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/users/:userId?" exact component={Users} />
+        <Route path="/login/:type?" component={Login} />
+        <Route path="/users/:userId?/:edit?" exact component={Users} />
         <Route path="/" component={MainPage} />
       </Switch>
     </>

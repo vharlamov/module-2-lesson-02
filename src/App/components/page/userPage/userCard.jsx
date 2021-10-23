@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { useHistory } from "react-router"
 import PropTypes from "prop-types"
 
@@ -6,7 +5,7 @@ const UserCard = ({ users, id }) => {
   const user = users.find((user) => user._id === id)
   const history = useHistory()
   const handleClick = () => {
-    history.push("/users")
+    history.push(`/users/${id}/edit`)
   }
 
   return (
@@ -20,7 +19,7 @@ const UserCard = ({ users, id }) => {
       ))}
       <p>Completed meetings: {user.completedMeetings}</p>
       <h2>Rate: {user.rate}</h2>
-      <button onClick={handleClick}>Все пользователи</button>
+      <button onClick={handleClick}>Изменить</button>
     </>
   )
 }

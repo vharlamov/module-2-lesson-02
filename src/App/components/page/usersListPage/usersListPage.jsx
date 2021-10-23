@@ -1,13 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
-import UsersTable from "../components/usersTable"
-import Pagination from "../components/pagination"
-import StatusBar from "../components/statusbar"
-import GroupList from "../components/groupList"
+import UsersTable from "../../ui/usersTable"
+import Pagination from "../../common/pagination"
+import StatusBar from "../../ui/statusbar"
+import GroupList from "../../common/groupList"
 import { useParams } from "react-router"
-import Search from "./search"
+import Search from "../../search"
 
-const UsersPage = (props) => {
+const UsersListPage = (props) => {
   const {
     selectedProf,
     professions,
@@ -70,7 +70,7 @@ const UsersPage = (props) => {
   )
 }
 
-UsersPage.propTypes = {
+UsersListPage.propTypes = {
   selectedProf: PropTypes.object,
   professions: PropTypes.array,
   currentPage: PropTypes.number,
@@ -89,4 +89,4 @@ UsersPage.propTypes = {
   onSearch: PropTypes.func
 }
 
-export default UsersPage
+export default UsersListPage

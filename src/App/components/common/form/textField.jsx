@@ -1,12 +1,25 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useState } from "react/cjs/react.development"
+import { placeholder } from "@babel/types"
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({
+  label,
+  type,
+  name,
+  value,
+  onChange,
+  error,
+  placeholder
+}) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const handleShowPass = () => {
     setShowPassword(!showPassword)
+  }
+
+  const handleChange = ({ target }) => {
+    onChange({ [target.name]: target.value })
   }
 
   const getInputClasses = () => {
@@ -22,8 +35,9 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
           id={name}
           name={name}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           className={getInputClasses()}
+          placeholder={placeholder}
         />
         {type === "password" && (
           <button
@@ -50,6 +64,7 @@ TextField.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired
 }
 
