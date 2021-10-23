@@ -22,6 +22,8 @@ const EditUserPage = ({ users, id, onSubmit }) => {
     sex: user.sex || "other"
   })
 
+  const isError = Object.keys(errors).length
+
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data))
     api.qualities.fetchAll().then((data) => setQualities(data))
@@ -113,6 +115,7 @@ const EditUserPage = ({ users, id, onSubmit }) => {
             />
 
             <button
+              disabled={isError}
               className="btn btn-primary w-100 mx-auto mb-2"
               onClick={handleSubmit}
             >
