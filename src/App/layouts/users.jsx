@@ -5,13 +5,14 @@ import { paginate } from "../utils/paginate"
 import api from "../api/index"
 import isEqual from "../utils/isEqual"
 import _ from "lodash"
-import { Route, useParams } from "react-router"
-import UsersPage from "../components/usersPage"
-import UserCard from "../components/userCard"
+import { useParams } from "react-router"
+import UsersListPage from "../components/page/usersListPage"
+import UserCard from "../components/page/userPage"
+import EditUserPage from "../components/page/editUserPage/editUserPage"
 
 const Users = () => {
   const [users, setUsers] = useState([])
-  const userId = useParams().userId
+  const { userId, edit } = useParams()
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data))
@@ -48,7 +49,6 @@ const Users = () => {
   const handleUserSearch = (e) => {
     e.preventDefault()
     const value = e.target.value
-    console.log("value", value)
 
     setSelectedProf()
     setSearchData(value)
@@ -70,6 +70,11 @@ const Users = () => {
 
   const clearFilter = () => {
     setSelectedProf()
+  }
+
+  const handleEdit = (id, data) => {
+    setUsers(users.map((user) => (user._id === id ? data : user)))
+    api.users.update(id, data)
   }
 
   if (users.length) {
@@ -94,10 +99,12 @@ const Users = () => {
 
     return (
       <>
-        {userId ? (
+        {edit ? (
+          <EditUserPage users={users} id={userId} onSubmit={handleEdit} />
+        ) : userId ? (
           <UserCard users={users} id={userId} />
         ) : (
-          <UsersPage
+          <UsersListPage
             selectedProf={selectedProf}
             professions={professions}
             currentPage={currentPage}

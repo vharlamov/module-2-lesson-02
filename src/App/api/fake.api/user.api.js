@@ -26,7 +26,7 @@ const qualities = {
     color: "info"
   },
   uncertain: {
-    _id: "67rdca3eeb7f6fgeed471102",
+    _id: "67rdca3eeb7f6fgeed471103",
     name: "Неуверенный",
     color: "dark"
   }
@@ -143,13 +143,39 @@ const users = [
   }
 ]
 
+if (!localStorage.getItem("users")) {
+  localStorage.setItem("users", JSON.stringify(users))
+}
+
 const fetchAll = () =>
   new Promise((resolve) => {
     window.setTimeout(function () {
-      resolve(users)
+      resolve(JSON.parse(localStorage.getItem("users")))
+    }, 2000)
+  })
+
+const update = (id, data) =>
+  new Promise((resolve) => {
+    const users = JSON.parse(localStorage.getItem("users"))
+    const userIndex = users.findIndex((u) => u._id === id)
+    users[userIndex] = { ...users[userIndex], ...data }
+    localStorage.setItem("users", JSON.stringify(users))
+    resolve(users[userIndex])
+  })
+
+const getById = (id) =>
+  new Promise((resolve) => {
+    window.setTimeout(function () {
+      resolve(
+        JSON.parse(localStorage.getItem("users")).find(
+          (user) => user._id === id
+        )
+      )
     }, 1000)
   })
 
 export default {
-  fetchAll
+  fetchAll,
+  getById,
+  update
 }

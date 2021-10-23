@@ -6,10 +6,10 @@ export function validator(data, config) {
 
     switch (method) {
       case "required":
-        statusValidate = data.trim() === ""
+        statusValidate = typeof data === "boolean" ? !data : data.trim() === ""
         break
       case "isEmail": {
-        const emailRegExp = /^[\w-\.]+@[\w]+\.\w+/g
+        const emailRegExp = /^[\wА-Яа-я\.]+@[\wА-Яа-я]+\.\w+/g
         statusValidate = !emailRegExp.test(data.trim())
         break
       }
@@ -27,7 +27,12 @@ export function validator(data, config) {
         statusValidate = data.length < config.value
         break
       }
+      case "isTrue": {
+        statusValidate = !data
+        break
+      }
     }
+
     return statusValidate
       ? typeof config.message === "function"
         ? config.message()

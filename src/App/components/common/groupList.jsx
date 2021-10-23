@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import isEqual from "../utils/isEqual"
+import isEqual from "../../utils/isEqual"
 
 const GroupList = ({ items, value, content, onSelect, selectedItem }) => {
   const itemsArr = Array.isArray(items) ? items : Object.values(items)
