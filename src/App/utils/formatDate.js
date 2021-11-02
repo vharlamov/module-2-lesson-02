@@ -23,8 +23,6 @@ export default function formatDate(date) {
   }
 
   switch (true) {
-    case diffTime / 60 < 1:
-      return " - 0 минут назад"
     case diffTime / 60 <= 10:
       return ` - ${Math.floor(diffTime / 60)} минут назад`
     case diffTime / 3600 < 1 && diffTime / 3600 > 0.5:
