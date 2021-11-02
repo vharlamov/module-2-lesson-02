@@ -1,4 +1,4 @@
-export default function (date) {
+export default function formatDate(date) {
   const created = new Date(+date)
   const current = new Date()
   const diffTime = (current - created) / 1000
