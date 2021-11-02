@@ -72,7 +72,7 @@ const UsersListPage = (props) => {
 
 UsersListPage.propTypes = {
   selectedProf: PropTypes.object,
-  professions: PropTypes.array,
+  professions: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   currentPage: PropTypes.number,
   filteredUsers: PropTypes.array,
   users: PropTypes.array,

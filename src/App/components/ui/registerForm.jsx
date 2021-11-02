@@ -27,7 +27,6 @@ const RegisterForm = () => {
     setData((prevData) => ({ ...prevData, ...target }))
   }
 
-  console.log("Register data", data) // to kill
   const validatorConfig = {
     email: {
       required: {

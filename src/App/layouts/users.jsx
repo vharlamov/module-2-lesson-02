@@ -7,7 +7,7 @@ import isEqual from "../utils/isEqual"
 import _ from "lodash"
 import { useParams } from "react-router"
 import UsersListPage from "../components/page/usersListPage"
-import UserCard from "../components/page/userPage"
+import { UserPage } from "../components/page/userPage"
 import EditUserPage from "../components/page/editUserPage/editUserPage"
 
 const Users = () => {
@@ -102,7 +102,7 @@ const Users = () => {
         {edit ? (
           <EditUserPage users={users} id={userId} onSubmit={handleEdit} />
         ) : userId ? (
-          <UserCard users={users} id={userId} />
+          <UserPage users={users} id={userId} />
         ) : (
           <UsersListPage
             selectedProf={selectedProf}
