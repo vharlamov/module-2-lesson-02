@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import formatDate from "../../../utils/formatDate"
+import formatDate from "../../../../utils/formatDate"
 
 const Comment = ({ comm, users, onDelete }) => {
   const date = formatDate(comm.created_at)

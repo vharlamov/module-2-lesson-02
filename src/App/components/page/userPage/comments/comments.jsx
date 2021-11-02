@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import { CommentList, CommentForm } from "."
-import api from "../../../api"
-import { validator } from "../../../utils/validator"
+import { CommentList, CommentForm } from ".."
+import api from "../../../../api"
+import { validator } from "../../../../utils/validator"
 
 const Comments = ({ users, user }) => {
   const [comment, setComment] = useState({ text: "", targetUser: null })

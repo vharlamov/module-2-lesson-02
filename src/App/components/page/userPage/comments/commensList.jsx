@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Comment } from "."
+import { Comment } from ".."
 
 const CommentList = ({ user, users, comments, onDelete, targetUser }) => {
   const userComments = comments.filter(

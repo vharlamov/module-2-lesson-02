@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import SelectField from "../../common/form/selectField"
-import TextAreaField from "../../common/form/textareaField"
+import SelectField from "../../../common/form/selectField"
+import TextAreaField from "../../../common/form/textareaField"
 
 const CommentForm = ({ users, value, onChange, onSubmit, errors }) => {
   const isError = Object.keys(errors).length !== 0
