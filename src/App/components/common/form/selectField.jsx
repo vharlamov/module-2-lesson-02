@@ -17,7 +17,7 @@ const SelectField = ({
 
   const handleChange = ({ target }) => {
     onChange({
-      [target.name]: options.find((item) => item._id === target.value)
+      [target.name]: optionsArray.find((item) => item._id === target.value)
     })
   }
 
