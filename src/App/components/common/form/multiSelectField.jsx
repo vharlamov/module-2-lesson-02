@@ -25,13 +25,8 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
       }))
     : []
 
-  const handleChange = (e) => {
-    const data = e.map((item) => ({
-      _id: item.value,
-      name: item.label,
-      color: item.color
-    }))
-    onChange({ [name]: data })
+  const handleChange = (value) => {
+    onChange({ name: name, value })
   }
 
   return (

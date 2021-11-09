@@ -4,6 +4,7 @@ import formatDate from "../../../../utils/formatDate"
 
 const Comment = ({ comm, users, onDelete }) => {
   const date = formatDate(comm.created_at)
+
   return (
     <div className="bg-light card-body  mb-3">
       <div className="row">

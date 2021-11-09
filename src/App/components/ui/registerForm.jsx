@@ -12,19 +12,43 @@ const RegisterForm = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    profession: "",
+    profession: {},
     sex: "other",
     qualities: [],
     license: false
   })
   const [errors, setErrors] = useState({})
-  const [professions, setProfession] = useState()
+  const [professions, setProfessions] = useState()
   const [qualities, setQualities] = useState()
 
   const isError = Object.keys(errors).length
 
+  const getProfession = (id) => {
+    return Object.values(professions).find((prof) => prof._id === id)
+  }
+
+  const getQualities = (arr) => {
+    return arr.map((item) => ({
+      _id: item.value || item._id,
+      color: item.color,
+      name: item.label || item.name
+    }))
+  }
+
   const handleChange = (target) => {
-    setData((prevData) => ({ ...prevData, ...target }))
+    if (target.name && target.name === "profession") {
+      setData((prev) => ({
+        ...prev,
+        [target.name]: getProfession(target.value)
+      }))
+    } else if (target.name === "qualities") {
+      setData((prev) => ({
+        ...prev,
+        [target.name]: getQualities(target.value)
+      }))
+    } else {
+      setData((prev) => ({ ...prev, ...target }))
+    }
   }
 
   const validatorConfig = {
@@ -52,7 +76,7 @@ const RegisterForm = () => {
       }
     },
     profession: {
-      required: {
+      isSelect: {
         message: "Необходимо выбрать профессию"
       }
     },
@@ -70,7 +94,10 @@ const RegisterForm = () => {
   }
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfession(data))
+    api.professions.fetchAll().then((data) => setProfessions(data))
+  }, [])
+
+  useEffect(() => {
     api.qualities.fetchAll().then((data) => setQualities(data))
   }, [])
 
@@ -85,7 +112,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <TextField
         label="Email"
         name="email"
@@ -101,14 +128,19 @@ const RegisterForm = () => {
         onChange={handleChange}
         error={errors.password}
       />
-      <SelectField
-        label="Выберите вашу профессию"
-        value={data.profession}
-        error={errors.profession}
-        onChange={handleChange}
-        defaultOption="Choose..."
-        options={professions}
-      />
+      {professions && Object.keys(professions).length ? (
+        <SelectField
+          label="Выберите вашу профессию"
+          name="profession"
+          value={data.profession.name}
+          error={errors.profession}
+          onChange={handleChange}
+          defaultOption={data.profession.name || "Choose..."}
+          options={professions}
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
       <RadioField
         label="Выберите ваш пол"
         value={data.sex}
@@ -134,10 +166,14 @@ const RegisterForm = () => {
       >
         Подтвердить <a href="#">лицензионное соглашение</a>
       </CheckboxField>
-      <button disabled={isError} className="btn btn-primary w-100 mx-auto mb-2">
+      <button
+        disabled={isError}
+        className="btn btn-primary w-100 mx-auto mb-2"
+        onClick={handleSubmit}
+      >
         Submit
       </button>
-    </form>
+    </div>
   )
 }
 

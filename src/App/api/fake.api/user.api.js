@@ -176,6 +176,7 @@ const fetchAll = () =>
       resolve(JSON.parse(localStorage.getItem("users")))
     }, 500)
   })
+
 const update = (id, data) =>
   new Promise((resolve) => {
     const users = JSON.parse(localStorage.getItem("users"))
@@ -185,8 +186,8 @@ const update = (id, data) =>
     resolve(users[userIndex])
   })
 
-const getById = (id) =>
-  new Promise((resolve) => {
+const getById = (id) => {
+  return new Promise((resolve) => {
     window.setTimeout(function () {
       resolve(
         JSON.parse(localStorage.getItem("users")).find(
@@ -195,6 +196,7 @@ const getById = (id) =>
       )
     }, 500)
   })
+}
 export default {
   fetchAll,
   getById,

@@ -7,12 +7,12 @@ import { validator } from "../../../../utils/validator"
 const Comments = ({ users, user }) => {
   const [comment, setComment] = useState({ text: "", targetUser: null })
   const [userComments, setUserComments] = useState([])
-  const [targetUser, setTargetUser] = useState()
+  const [targetUser, setTargetUser] = useState("")
   const [errors, setErrors] = useState({})
 
   const validatorConfig = {
     targetUser: {
-      isTrue: {
+      isSelect: {
         message: "Необходимо выбрать собеседника"
       }
     },
@@ -33,14 +33,18 @@ const Comments = ({ users, user }) => {
   const sort = (arr) => arr.sort((a, b) => +b.created_at - +a.created_at)
 
   const onChange = (data) => {
-    setComment((prev) => ({ ...prev, ...data }))
-    if (data.targetUser) setTargetUser(data.targetUser._id)
+    if (data.name) {
+      setComment((prev) => ({ ...prev, [data.name]: data.value }))
+      setTargetUser(data.value)
+    } else {
+      setComment((prev) => ({ ...prev, ...data }))
+    }
   }
 
   const handleSubmit = () => {
     const newComment = {
       userId: user._id,
-      pageId: comment.targetUser._id,
+      pageId: comment.targetUser,
       content: comment.text
     }
 
@@ -52,8 +56,8 @@ const Comments = ({ users, user }) => {
         setUserComments(sort(JSON.parse(localStorage.getItem("comments"))))
       )
 
-    setTargetUser(comment.targetUser._id)
-    setComment({ text: "", targetUser: comment.targetUser._id })
+    setTargetUser(comment.targetUser)
+    setComment({ text: "", targetUser: comment.targetUser })
   }
 
   const handleDelete = (id) => {
@@ -82,6 +86,7 @@ const Comments = ({ users, user }) => {
         onSubmit={handleSubmit}
         value={comment.text}
         errors={errors}
+        selectedUser={targetUser}
       />
       <CommentList
         users={users}

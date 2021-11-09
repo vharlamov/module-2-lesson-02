@@ -12,12 +12,19 @@ const SelectField = ({
 }) => {
   const optionsArray =
     !Array.isArray(options) && typeof options === "object"
-      ? Object.values(options)
-      : options
+      ? Object.keys(options).map((key) => ({
+          name: options[key].name,
+          value: options[key]._id
+        }))
+      : options.map((option) => ({
+          name: option.name,
+          value: option._id
+        }))
 
   const handleChange = ({ target }) => {
     onChange({
-      [target.name]: optionsArray.find((item) => item._id === target.value)
+      name: target.name,
+      value: target.value
     })
   }
 
@@ -37,11 +44,13 @@ const SelectField = ({
         name={name}
         onChange={handleChange}
       >
-        <option value="">{defaultOption}</option>
+        <option value={defaultOption}>
+          {defaultOption || "Выберите пользователя"}
+        </option>
         {optionsArray &&
-          optionsArray.map((item) => (
-            <option value={item._id} key={item._id}>
-              {item.name}
+          optionsArray.map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.name}
             </option>
           ))}
       </select>
@@ -57,7 +66,7 @@ SelectField.propTypes = {
   onChange: PropTypes.func,
   defaultOption: PropTypes.string,
   error: PropTypes.string,
-  options: PropTypes.oneOfType(PropTypes.array, PropTypes.object)
+  options: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 }
 
 export default SelectField

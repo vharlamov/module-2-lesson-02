@@ -31,6 +31,10 @@ export function validator(data, config) {
         statusValidate = !data
         break
       }
+      case "isSelect": {
+        statusValidate = !Boolean(data)
+        break
+      }
     }
 
     return statusValidate

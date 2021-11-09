@@ -3,7 +3,14 @@ import PropTypes from "prop-types"
 import SelectField from "../../../common/form/selectField"
 import TextAreaField from "../../../common/form/textareaField"
 
-const CommentForm = ({ users, value, onChange, onSubmit, errors }) => {
+const CommentForm = ({
+  users,
+  value,
+  onChange,
+  onSubmit,
+  errors,
+  selectedUser
+}) => {
   const isError = Object.keys(errors).length !== 0
 
   return (
@@ -13,8 +20,7 @@ const CommentForm = ({ users, value, onChange, onSubmit, errors }) => {
           <h2>New comment</h2>
           <SelectField
             name="targetUser"
-            label={null}
-            value={null}
+            value={selectedUser}
             onChange={onChange}
             defaultOption="Выберите пользователя"
             options={users}
@@ -47,7 +53,8 @@ CommentForm.propTypes = {
   value: PropTypes.string,
   errors: PropTypes.object,
   onChange: PropTypes.func,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  selectedUser: PropTypes.string
 }
 
 export default CommentForm

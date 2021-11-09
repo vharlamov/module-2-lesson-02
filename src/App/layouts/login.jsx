@@ -23,19 +23,19 @@ const Login = () => {
           </h3>
           {formType === "register" ? (
             <>
-              <RegisterForm />{" "}
+              <RegisterForm />
               <p>
-                Alredy have account?{" "}
+                Alredy have account?
                 <a role="button" onClick={toggleFormType}>
                   Sign in
                 </a>
-              </p>{" "}
+              </p>
             </>
           ) : (
             <>
-              <LoginForm />{" "}
+              <LoginForm />
               <p>
-                Dont have account?{" "}
+                Dont have account?
                 <a role="button" onClick={toggleFormType}>
                   Sign up
                 </a>

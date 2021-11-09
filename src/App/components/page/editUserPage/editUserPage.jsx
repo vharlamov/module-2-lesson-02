@@ -7,36 +7,32 @@ import { useEffect, useState } from "react/cjs/react.development"
 import MultiSelectField from "../../common/form/multiSelectField"
 import RadioField from "../../common/form/radioField"
 import { validator } from "../../../utils/validator"
-import { useHistory } from "react-router"
+import { useHistory, useParams } from "react-router"
 
-const EditUserPage = ({ users, id, onSubmit }) => {
-  const [professions, setProfession] = useState()
-  const [qualities, setQualities] = useState()
-  const user = users.find((user) => user._id === id)
+const EditUserPage = () => {
+  const [professions, setProfessions] = useState([])
+  const [qualities, setQualities] = useState([])
   const [errors, setErrors] = useState({})
   const history = useHistory()
-
-  const [userData, setUserData] = useState({
-    ...user,
-    email: user.email || "",
-    sex: user.sex || "other"
-  })
-
+  const { userId } = useParams()
+  const [userData, setUserData] = useState({})
   const isError = Object.keys(errors).length
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfession(data))
+    api.users.getById(userId).then((data) => setUserData(data))
+  }, [])
+
+  useEffect(() => {
     api.qualities.fetchAll().then((data) => setQualities(data))
   }, [])
 
-  const handleChange = (target) => {
-    setUserData((prev) => ({ ...prev, ...target }))
-  }
+  useEffect(() => {
+    api.professions.fetchAll().then((data) => setProfessions(data))
+  }, [])
 
-  const handleSubmit = () => {
-    onSubmit(id, userData)
-    history.push("/users")
-  }
+  useEffect(() => {
+    validate()
+  }, [userData])
 
   const validatorConfig = {
     name: {
@@ -60,11 +56,41 @@ const EditUserPage = ({ users, id, onSubmit }) => {
     return Object.keys(errors).length === 0
   }
 
-  useEffect(() => {
-    validate()
-  }, [userData])
+  const getProfession = (id) => {
+    return Object.values(professions).find((prof) => prof._id === id)
+  }
 
-  return (
+  const getQualities = (arr) => {
+    return arr.map((item) => ({
+      _id: item.value || item._id,
+      color: item.color,
+      name: item.label || item.name
+    }))
+  }
+
+  const handleChange = (target) => {
+    if (target.name === "profession") {
+      setUserData((prev) => ({
+        ...prev,
+        [target.name]: getProfession(target.value)
+      }))
+    } else if (target.name === "qualities") {
+      setUserData((prev) => ({
+        ...prev,
+        [target.name]: getQualities(target.value)
+      }))
+    } else {
+      setUserData((prev) => ({ ...prev, ...target }))
+    }
+  }
+
+  const handleSubmit = () => {
+    const { profession, qualities } = userData
+    api.users.update(userId, userData)
+    history.push(`/users/${userId}`)
+  }
+
+  return userData && Object.keys(userData).length ? (
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
@@ -96,7 +122,7 @@ const EditUserPage = ({ users, id, onSubmit }) => {
             />
             <MultiSelectField
               options={qualities}
-              defaultValue={[...userData.qualities]}
+              defaultValue={userData.qualities}
               onChange={handleChange}
               name="qualities"
               label="Ваши качества:"
@@ -125,13 +151,15 @@ const EditUserPage = ({ users, id, onSubmit }) => {
         </div>
       </div>
     </div>
+  ) : (
+    <p>Loading...</p>
   )
 }
 
 EditUserPage.propTypes = {
-  users: PropTypes.array,
+  user: PropTypes.object,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  id: PropTypes.string
+  userId: PropTypes.string
 }
 export default EditUserPage

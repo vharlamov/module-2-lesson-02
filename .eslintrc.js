@@ -25,6 +25,7 @@ module.exports = {
     "prefer-const": "off",
     "no-unused-vars": "off",
     "no-useless-return": "off",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "no-extra-boolean-cast": "off"
   }
 }
