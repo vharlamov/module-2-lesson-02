@@ -1,0 +1,153 @@
+%!Adobe-FontList 1.14
+%Locale:0x419
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:IntroRegularAlt
+FamilyName:Intro
+StyleName:Regular Alt
+FullName:Intro Regular Alt
+MenuName:Intro Regular Alt
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\intro_regular_alt.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:135512
+FileModTime:1517406706
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:StudioScriptITC
+FamilyName:StudioScriptITC
+StyleName:Regular
+FullName:StudioScriptITC
+MenuName:StudioScriptITC
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\ITC Studio Script_Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:67060
+FileModTime:1549548584
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\KG June Bug rus.zip
+FileModTime:1647601061
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:KGJuneBug
+FamilyName:KG June Bug
+StyleName:Regular
+FullName:KG June Bug
+MenuName:KG June Bug
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\KGJuneBug_rus_NEW.otf
+DataFormat:sfntData
+FileLength:50772
+FileModTime:1604980564
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+FullName:Minion Pro
+MenuName:Minion Pro
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:218392
+FileModTime:1493096318
+WeightClass:400
+WidthClass:5
+AngleClass:0
+DesignSize:110
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MyriadPro-Regular
+FamilyName:Myriad Pro
+StyleName:Regular
+FullName:Myriad Pro
+MenuName:Myriad Pro
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\MyriadPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:95752
+FileModTime:1482491426
+WeightClass:400
+WidthClass:5
+AngleClass:0
+DesignSize:110
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Packt
+FamilyName:Packt
+StyleName:Regular
+FullName:Packt
+MenuName:Packt
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\Packt_С.otf
+DataFormat:sfntData
+FileLength:44352
+FileModTime:1647601016
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:ShapeID_font
+FamilyName:ShapeID_font
+StyleName:Regular
+FullName:ShapeID_font
+MenuName:ShapeID_font
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:D:\Dropbox\МИФ\Лора Дин\Input\Laura Dean Keeps Breaking Up_Layout\Document fonts\ShapeID_font_R.otf
+DataFormat:sfntData
+FileLength:92548
+FileModTime:1614858342
+WeightClass:400
+WidthClass:5
+AngleClass:0
+%EndFont
+
